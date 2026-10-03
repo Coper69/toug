@@ -181,7 +181,7 @@ datetime:
     optimistic: true
    
   - platform: template
-    name: "Réglage Date/Heure"
+    name: "Réglage Date⁄Heure"
     id: user_set_time
     type: datetime # Pour régler la date ET l'heure
     icon: "mdi:clock-edit"
@@ -373,7 +373,6 @@ text_sensor:
     icon: "mdi:clipboard-alert-outline"
     register_type: holding
     address: 20162
-    register_count: 4
     response_size: 8
     raw_encode: NONE
     lambda: |-
@@ -441,7 +440,6 @@ text_sensor:
     entity_category: diagnostic
     register_type: holding
     address: 0x000E
-    register_count: 2
     response_size: 4
     raw_encode: HEXBYTES
    
@@ -501,7 +499,6 @@ text_sensor:
     entity_category: diagnostic
     register_type: holding
     address: 31200
-    register_count: 14
     response_size: 28
     raw_encode: HEXBYTES
     
@@ -512,7 +509,6 @@ text_sensor:
     entity_category: diagnostic
     register_type: holding
     address: 31214
-    register_count: 14
     response_size: 28
     raw_encode: HEXBYTES
     
@@ -523,7 +519,6 @@ text_sensor:
     entity_category: diagnostic
     register_type: holding
     address: 31228
-    register_count: 14
     response_size: 28
     raw_encode: HEXBYTES
     
@@ -534,7 +529,6 @@ text_sensor:
     entity_category: diagnostic
     register_type: holding
     address: 31242
-    register_count: 14
     response_size: 28
     raw_encode: HEXBYTES
   - platform: template
@@ -733,7 +727,6 @@ sensor:
     address: 21000
     register_type: holding
     value_type: U_WORD
-    register_count: 1
   - platform: modbus_controller
     modbus_controller_id: modbus_user
     name: "Filtre"
@@ -747,7 +740,6 @@ sensor:
     name: "Coût chauffage"
     register_type: holding
     address: 21678
-    register_count: 2
     value_type: U_DWORD
     device_class: monetary
     state_class: total
@@ -760,7 +752,6 @@ sensor:
     name: "Coût rafraichissement"
     register_type: holding
     address: 21680
-    register_count: 2
     value_type: U_DWORD
     device_class: monetary
     state_class: total
@@ -773,7 +764,6 @@ sensor:
     name: "Conso chauffage"
     register_type: holding
     address: 21668
-    register_count: 2
     value_type: U_DWORD
     device_class: energy
     state_class: total_increasing  # Si c'est un compteur cumulatif
@@ -784,7 +774,6 @@ sensor:
     name: "Conso chauffage appoint"
     register_type: holding
     address: 21670
-    register_count: 2
     value_type: U_DWORD
     device_class: energy
     state_class: total_increasing  # Si c'est un compteur cumulatif
@@ -795,7 +784,6 @@ sensor:
     name: "Conso rafraichissement"
     register_type: holding
     address: 21676
-    register_count: 2
     value_type: U_DWORD
     device_class: energy
     state_class: total_increasing  # Si c'est un compteur cumulatif
@@ -806,7 +794,6 @@ sensor:
     name: "Temps cumul compresseur ON"
     register_type: holding
     address: 20049
-    register_count: 2
     value_type: U_DWORD
     device_class: duration
     # state_class: total_increasing  # Si c'est un compteur cumulatif
@@ -818,7 +805,6 @@ sensor:
     name: "Temps compresseur ON"
     register_type: holding
     address: 72
-    register_count: 2
     value_type: U_DWORD
     device_class: duration
     # state_class: total_increasing  # Si c'est un compteur cumulatif
@@ -830,7 +816,6 @@ sensor:
     name: "Temps compresseur OFF"
     register_type: holding
     address: 150
-    register_count: 2
     value_type: U_DWORD
     device_class: duration
     # state_class: total_increasing  # Si c'est un compteur cumulatif
@@ -842,7 +827,6 @@ sensor:
     name: "Temps ventilateur ON"
     register_type: holding
     address: 20047
-    register_count: 2
     value_type: U_DWORD
     device_class: duration
     # state_class: total_increasing  # Si c'est un compteur cumulatif
@@ -856,10 +840,9 @@ sensor:
     entity_category: diagnostic
     register_type: holding
     address: 16
-    register_count: 2  # Lit deux Words (4 octets)
     device_class: timestamp
     accuracy_decimals: 0
-    value_type: U_WORD # Utilisation de U_WORD pour éviter le mélange en U_DWORD
+    value_type: U_DWORD  # 2 registres (date, heure) ; le lambda décode les octets lui-même
     
     lambda: |-
       // data est un tableau d'octets. Reconstruction des Words (16 bits)
@@ -910,10 +893,9 @@ sensor:
     entity_category: diagnostic
     register_type: holding
     address: 31008
-    register_count: 2  # Lit deux Words (4 octets)
     device_class: timestamp
     accuracy_decimals: 0
-    value_type: U_WORD # Utilisation de U_WORD pour éviter le mélange en U_DWORD
+    value_type: U_DWORD  # 2 registres (date, heure) ; le lambda décode les octets lui-même
     
     lambda: |-
       // data est un tableau d'octets. Reconstruction des Words (16 bits)
@@ -962,10 +944,9 @@ sensor:
     entity_category: diagnostic
     register_type: holding
     address: 31010
-    register_count: 2  # Lit deux Words (4 octets)
     device_class: timestamp
     accuracy_decimals: 0
-    value_type: U_WORD # Utilisation de U_WORD pour éviter le mélange en U_DWORD
+    value_type: U_DWORD  # 2 registres (date, heure) ; le lambda décode les octets lui-même
     
     lambda: |-
       // data est un tableau d'octets. Reconstruction des Words (16 bits)
@@ -1039,7 +1020,7 @@ sensor:
   # --- Registres de température et de courant (30-50) ---
   - platform: modbus_controller
     modbus_controller_id: modbus_telecommande
-    name: "Température extérieure/ Extérieur ThoA"
+    name: "Température extérieure⁄ Extérieur ThoA"
     device_class: temperature
     state_class: measurement
     register_type: holding
@@ -1156,7 +1137,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: modbus_telecommande
-    name: "Angle vanne 3 voies 1/2''"
+    name: "Angle vanne 3 voies 1⁄2''"
     state_class: measurement
     register_type: holding
     address: 94
@@ -1167,7 +1148,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: modbus_telecommande
-    name: "Angle vanne 3 voies 1/4''"
+    name: "Angle vanne 3 voies 1⁄4''"
     state_class: measurement
     register_type: holding
     address: 95
@@ -1644,7 +1625,6 @@ select:
     address: 21000
     use_write_multiple: true
     value_type: U_WORD
-    register_count: 2
     optimistic: true
 
     optionsmap:
@@ -1661,18 +1641,13 @@ select:
       // value = numéro du test choisi (optionsmap)
       uint16_t test_id = (uint16_t) value;
 
-      // Registre 21000 = ID du test
-      payload.push_back(test_id);
-
-      // Registre 21001 = 0 si test != 0, sinon 32753 pour arrêter
-      if (test_id == 0) {
-        payload.push_back(32753);
-      } else {
-        payload.push_back(0);
-      }
-
-      // Retourne n'importe quelle valeur (payload est prioritaire)
-      return 0;
+      // Registre 21000 = ID du test ; registre 21001 = 0 pour lancer,
+      // 32753 pour arrêter. Les deux en une écriture : depuis ESPHome
+      // 2026.9, une écriture plus large que value_type est rejetée, on
+      // l'envoie donc nous-mêmes
+      const uint16_t regs[2] = {test_id, (uint16_t) (test_id == 0 ? 32753 : 0)};
+      item->write_multiple_registers(21000, regs);
+      return {};
       
     on_value:
       then:
