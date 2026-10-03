@@ -1869,6 +1869,19 @@ output:
       payload.clear();
       payload.push_back(0x1);
       return 0;  // valeur interne, peu importe
+
+  # Essai : remise à zéro du compteur du filtre, en écrivant 0 dans le
+  # registre 20063 (État Filtre). La commande qu'envoie la télécommande
+  # (Système › Reset filtre) n'est pas documentée : si la PAC refuse cette
+  # écriture, rien ne change
+  - platform: modbus_controller
+    id: raz_compteur_filtre
+    modbus_controller_id: modbus_telecommande
+    address: 20063
+    register_type: holding
+    value_type: U_WORD
+    use_write_multiple: true
+    write_lambda: return 0;
     
   - platform: modbus_controller
     modbus_controller_id: modbus_telecommande
@@ -1879,6 +1892,13 @@ output:
     address: 20279
 
 button:
+  - platform: template
+    name: "Essai RAZ filtre"
+    entity_category: config
+    icon: "mdi:air-filter"
+    on_press:
+      - output.turn_on:
+          id: raz_compteur_filtre
   - platform: template
     name: "Reset Consommation"
     entity_category: config
